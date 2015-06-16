@@ -83,7 +83,6 @@ class EyeXInterface():
         self.eyex_dll.txGetAsyncDataResultCode(async_data, c.pointer(result))
 
     def _connection_handler(self, connection_state, user_param):
-        if connection_state == 1:
+        if connection_state == tx.TX_CONNECTIONSTATE.TX_CONNECTIONSTATE_CONNECTED:
             ret = self.eyex_dll.txCommitSnapshotAsync(self.interactor_snapshot, self._c_on_snapshot_committed, None)
-            print('CONNECTION RET:', ret)
 
