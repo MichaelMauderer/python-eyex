@@ -5,7 +5,7 @@ import eyex.types as tx
 Sample = namedtuple('Sample', ['data_mode', 'timestamp', 'x', 'y'])
 
 
-class EyeXInterface():
+class EyeXInterface(object):
     on_event = []
 
     def __init__(self, lib_location='Tobii.EyeX.Client.dll'):
@@ -43,6 +43,13 @@ class EyeXInterface():
             ret = self.eyex_dll.txDisableConnection(self.context)
             ret = self.eyex_dll.txShutdownContext(self.context, 500, tx.TX_FALSE)
             ret = self.eyex_dll.txReleaseContext(c.byref(self.context))
+
+    @property
+    def eyex_available(self):
+        availability = c.c_int(0)
+        self.eyex_dll.txGetEyeXAvailability(c.byref(availability))
+
+        return bool(availability)
 
     def _initialize_interactor_snapshot(self):
         interactor = c.c_voidp()
