@@ -47,10 +47,10 @@ class EyeXInterface(object):
     @property
     def eyex_available(self):
         availability = c.c_int(0)
-        ret =  self.eyex_dll.txGetEyeXAvailability(c.byref(availability))
+        ret = self.eyex_dll.txGetEyeXAvailability(c.byref(availability))
         if ret != tx.TX_RESULT_OK:
             return False
-        if availability != tx.TX_EYEXAVAILABILITY.TX_EYEXAVAILABILITY_RUNNING:
+        if availability.value != tx.TX_EYEXAVAILABILITY.TX_EYEXAVAILABILITY_RUNNING:
             return False
         return True
 
